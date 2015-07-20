@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class SignUpActivity extends Activity {
 
     @Bind(R.id.username) EditText mUsername;
-    @Bind(R.id.passwod) EditText mPassword;
+    @Bind(R.id.password) EditText mPassword;
     @Bind(R.id.emailField) EditText mEmail;
     @Bind(R.id.signupBtn) Button mSignUpBtn;
 

@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Ribbit</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Inbox</string>
+    <string name="title_section2">Friends</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -22,4 +21,7 @@
     <string name="login_error_message">Please make sure you enter an username and password</string>
     <string name="login_error_title">Oops an Error has occurred</string>
     <string name="action_logout">Logout</string>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
+    <string name="title_section3">Section 3</string>
+    <string name="empty_list">There is not data to display</string>
 </resources>

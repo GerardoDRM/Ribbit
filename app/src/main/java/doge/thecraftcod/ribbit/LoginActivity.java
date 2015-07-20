@@ -16,13 +16,14 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class LoginActivity extends Activity {
 
     @Bind(R.id.sing_up) TextView mSignUpTextView;
     @Bind(R.id.username) EditText mUsername;
-    @Bind(R.id.passwod) EditText mPassword;
+    @Bind(R.id.password) EditText mPassword;
     @Bind(R.id.loginBtn) Button mLoginBtn;
 
     @Override
@@ -30,6 +31,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
