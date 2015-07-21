@@ -24,4 +24,6 @@
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
     <string name="title_section3">Section 3</string>
     <string name="empty_list">There is not data to display</string>
+    <string name="action_edit_friend">Edit Friend</string>
+    <string name="title_activity_edit_friends">EditFriendsActivity</string>
 </resources>

@@ -34,6 +34,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         setContentView(R.layout.activity_main);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -107,6 +109,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_logout) {
             ParseUser.logOut();
             navigateToLogin();
+        }
+        else if (id  == R.id.action_edit_friend) {
+            Intent i =  new Intent(this, EditFriendsActivity.class);
+            startActivity(i);
+
         }
 
         return super.onOptionsItemSelected(item);
