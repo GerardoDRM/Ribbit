@@ -54,10 +54,6 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
         }
         holder.nameLabel.setText(message.getString(ParseConstants.KEY_SENDER_NAME));
 
-
-
-
-
         return convertView;
 
     }
@@ -65,5 +61,11 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
     private static class ViewHolder {
         ImageView iconImageView;
         TextView nameLabel;
+    }
+
+    public void refill(List<ParseObject> messages) {
+        mList.clear();
+        mList.addAll(messages);
+        notifyDataSetChanged();
     }
 }

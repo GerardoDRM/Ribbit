@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class ViewImageActivity extends Activity {
 
@@ -21,6 +24,14 @@ public class ViewImageActivity extends Activity {
         // Using picasso to get an image from web
         // ,, Pretty cool
         Picasso.with(this).load(imageUri.toString()).into(image);
+
+        Timer time = new Timer();
+        time.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 10*1000);
 
     }
 
