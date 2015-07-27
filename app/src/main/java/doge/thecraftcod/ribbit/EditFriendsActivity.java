@@ -1,15 +1,16 @@
 package doge.thecraftcod.ribbit;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -20,20 +21,28 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class EditFriendsActivity extends ListActivity {
+
+public class EditFriendsActivity extends ActionBarActivity {
 
     private List<ParseUser> mUser;
     private ParseRelation<ParseUser> mFriendsRelation;
     private ParseUser mCurrentUser;
+    @Bind(android.R.id.list) ListView mListView;
+    @Bind(android.R.id.empty)
+    TextView mEmptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_edit_friends);
+        ButterKnife.bind(this);
 
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
     @Override
@@ -42,14 +51,14 @@ public class EditFriendsActivity extends ListActivity {
 
         mCurrentUser = ParseUser.getCurrentUser();
         mFriendsRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDS_RELATION);
-        setProgressBarIndeterminateVisibility(true);
+        //setProgressBarIndeterminateVisibility(true);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.orderByAscending(ParseConstants.KEY_USERNAME);
         query.setLimit(1000);
         query.findInBackground(new FindCallback<ParseUser>() {
             public void done(List<ParseUser> users, ParseException e) {
-                setProgressBarIndeterminateVisibility(false);
+                //setProgressBarIndeterminateVisibility(false);
                 if (e == null) {
                     mUser = users;
                     String[] usernames = new String[mUser.size()];
@@ -60,7 +69,32 @@ public class EditFriendsActivity extends ListActivity {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditFriendsActivity.this,
                             android.R.layout.simple_list_item_checked, usernames);
-                    setListAdapter(adapter);
+                    mListView.setAdapter(adapter);
+                    mListView.setEmptyView(mEmptyText);
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(mListView.isItemChecked(position)) {
+                                // add a friend
+                                mFriendsRelation.add(mUser.get(position));
+
+                            }
+                            else {
+                                // remove a friend
+                                mFriendsRelation.remove(mUser.get(position));
+
+                            }
+
+                            mCurrentUser.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e("Error", e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    });
 
                     addFriendsCheckMarks();
 
@@ -86,7 +120,7 @@ public class EditFriendsActivity extends ListActivity {
                         ParseUser user = mUser.get(i);
                         for (ParseUser friend : friends) {
                             if (friend.getObjectId().equals(user.getObjectId())) {
-                                getListView().setItemChecked(i, true);
+                                mListView.setItemChecked(i, true);
                             }
                         }
                     }
@@ -110,30 +144,4 @@ public class EditFriendsActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        if(getListView().isItemChecked(position)) {
-            // add a friend
-            mFriendsRelation.add(mUser.get(position));
-
-        }
-        else {
-            // remove a friend
-            mFriendsRelation.remove(mUser.get(position));
-
-        }
-
-        mCurrentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e("Error", e.getMessage());
-                }
-            }
-        });
-
-
-
-    }
 }

@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.testapp;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -7,21 +7,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity2Activity extends Activity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity2);
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
-        actionBar.show();;
+
+        setContentView(R.layout.activity_main);
+        ActionBar actionBar = getActionBar();
+        actionBar.show();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

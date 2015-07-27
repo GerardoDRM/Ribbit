@@ -1,14 +1,17 @@
 package doge.thecraftcod.ribbit;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -23,8 +26,11 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class ChooseRecipients extends ListActivity {
+
+public class ChooseRecipients extends ActionBarActivity {
     private List<ParseUser> mFriends;
     private ParseRelation<ParseUser> mFriendsRelation;
     private ParseUser mCurrentUser;
@@ -33,16 +39,22 @@ public class ChooseRecipients extends ListActivity {
     private Uri mMediaUri;
     private String fileType;
 
+    @Bind(android.R.id.list) ListView mListView;
+    @Bind(android.R.id.empty) TextView mEmptyText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_recipients);
+        ButterKnife.bind(this);
 
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         mMediaUri = getIntent().getData();
         fileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
+        Log.d("FILE",fileType);
 
     }
 
@@ -71,9 +83,21 @@ public class ChooseRecipients extends ListActivity {
                         usernames[i] = user.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(),
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mListView.getContext(),
                             android.R.layout.simple_list_item_checked, usernames);
-                    setListAdapter(adapter);
+                    mListView.setAdapter(adapter);
+                    mListView.setEmptyView(mEmptyText);
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (mListView.getCheckedItemCount() > 0) {
+                                mSendMenuItem.setVisible(true);
+                            }
+                            else {
+                                mSendMenuItem.setVisible(false);
+                            }
+                        }
+                    });
                 }// end if
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChooseRecipients.this);
@@ -94,7 +118,7 @@ public class ChooseRecipients extends ListActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_choose_recipients, menu);
         mSendMenuItem = menu.getItem(0);
-        return true;
+        return (super.onCreateOptionsMenu(menu));
     }
 
     @Override
@@ -152,6 +176,7 @@ public class ChooseRecipients extends ListActivity {
         message.put(ParseConstants.KEY_SENDER_IDS, ParseUser.getCurrentUser().getObjectId());
         message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
         message.put(ParseConstants.KEY_RECIPIENT_IDS, getRecipientsIds());
+        message.put(ParseConstants.KEY_FILE_TYPE, fileType);
 
         byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
 
@@ -170,23 +195,10 @@ public class ChooseRecipients extends ListActivity {
         }
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        if (l.getCheckedItemCount() > 0) {
-            mSendMenuItem.setVisible(true);
-        }
-        else {
-            mSendMenuItem.setVisible(false);
-        }
-
-
-    }
-
     public ArrayList<String> getRecipientsIds() {
         ArrayList<String> recipientIds = new ArrayList<String>();
-        for(int i=0; i < getListView().getCount(); i++) {
-            if (getListView().isItemChecked(i)) {
+        for(int i=0; i < mListView.getCount(); i++) {
+            if (mListView.isItemChecked(i)) {
                 recipientIds.add(mFriends.get(i).getObjectId());
 
             }

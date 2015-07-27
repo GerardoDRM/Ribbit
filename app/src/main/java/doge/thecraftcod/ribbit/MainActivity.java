@@ -43,6 +43,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected Uri mMediaUri;
 
 
+
     private DialogInterface.OnClickListener mDialogListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -115,7 +116,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                 String path = mediaStorageDir.getPath() + File.separator;
                 if (mediaTypeImage == MEDIA_TYPE_IMAGE) {
-                    mediaFile = new File(path + "IMG_" + timestamp);
+                    mediaFile = new File(path + "IMG_" + timestamp + ".jpg");
                 }
                 else if (mediaTypeImage == MEDIA_TYPE_VIDEO) {
                     mediaFile = new File(path + "VID_" + timestamp + ".mp4");
@@ -212,6 +213,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

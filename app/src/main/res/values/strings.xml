@@ -43,4 +43,5 @@
     <string name="error_with_selected_file">There was an error with the selected  file</string>
     <string name="message_ok">Message sent!</string>
     <string name="error_sending_msg">There was an error sending your message</string>
+    <string name="title_activity_view_image">ViewImageActivity</string>
 </resources>
