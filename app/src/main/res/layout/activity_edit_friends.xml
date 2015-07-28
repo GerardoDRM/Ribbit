@@ -17,7 +17,8 @@
         android:id="@android:id/empty"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="You don&apos;t have friends" />
+        android:text="You don&apos;t have friends"
+        />
 
 
 </RelativeLayout>

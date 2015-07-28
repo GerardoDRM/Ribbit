@@ -11,11 +11,11 @@
     <string name="Username">username_hint</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    <string name="login_name">Login</string>
-    <string name="sing_up_text">Sing Up</string>
+    <string name="login_name">LOGIN</string>
+    <string name="sing_up_text">Don\'t have an account? Sign Up</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="email_hint">Email</string>
-    <string name="sign_up_btn">Sign Up</string>
+    <string name="sign_up_btn">Sign Up!</string>
     <string name="sign_up_error_message">Please make sure you enter an username, password and email</string>
     <string name="sign_up_error_title">Oops an Error has occurred</string>
     <string name="login_error_message">Please make sure you enter an username and password</string>
@@ -44,4 +44,6 @@
     <string name="message_ok">Message sent!</string>
     <string name="error_sending_msg">There was an error sending your message</string>
     <string name="title_activity_view_image">ViewImageActivity</string>
+    <string name="background_desc">Ribbit Frog Background</string>
+    <string name="subtitle">Destructive messages</string>
 </resources>
