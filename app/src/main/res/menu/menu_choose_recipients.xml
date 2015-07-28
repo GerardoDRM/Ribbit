@@ -4,5 +4,5 @@
     tools:context="doge.thecraftcod.ribbit.ChooseRecipients">
     <item android:id="@+id/action_send" android:title="@string/action_send"
         android:orderInCategory="100" app:showAsAction="always"
-        android:visible="false" android:icon="@drawable/ic_launcher"/>
+        android:visible="false" android:icon="@mipmap/ic_menu_send"/>
 </menu>
