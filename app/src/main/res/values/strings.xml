@@ -46,4 +46,6 @@
     <string name="title_activity_view_image">ViewImageActivity</string>
     <string name="background_desc">Ribbit Frog Background</string>
     <string name="subtitle">Destructive messages</string>
+    <string name="cancel">Cancel</string>
+    <string name="btnDivider">Button Divider</string>
 </resources>

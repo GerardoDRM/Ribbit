@@ -23,6 +23,7 @@ public class SignUpActivity extends Activity {
     @Bind(R.id.password) EditText mPassword;
     @Bind(R.id.emailField) EditText mEmail;
     @Bind(R.id.signupBtn) Button mSignUpBtn;
+    @Bind(R.id.cancelBtn) Button mCancelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,13 @@ public class SignUpActivity extends Activity {
 
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+
+        mCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override

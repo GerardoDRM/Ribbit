@@ -8,7 +8,9 @@
 
     <LinearLayout
         android:id="@+id/editTextLayout"
-        style="@style/AuthFieldContainer">
+        style="@style/AuthFieldContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_width="400dp">
 
         <EditText
             style="@style/AuthEditText"
@@ -43,7 +45,8 @@
         android:id="@+id/loginBtn"
         style="@style/AuthButton"
         android:layout_below="@+id/editTextLayout"
-        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_width="400dp"
     />
 
 
