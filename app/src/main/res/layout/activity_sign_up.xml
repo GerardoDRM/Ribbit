@@ -13,7 +13,8 @@
     <EditText
         style="@style/AuthEditText"
         android:inputType="textPersonName"
-        android:hint="@string/username_hint">
+        android:hint="@string/username_hint"
+        android:id="@+id/username">
         <requestFocus/>
     </EditText>
 

@@ -4,13 +4,21 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
 
-    <ListView
+    <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@android:id/list"
+        android:id="@+id/friends_grid"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="@dimen/user_grid_space"
+        android:verticalSpacing="@dimen/user_grid_space"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"/>
 
     <TextView
         android:layout_width="match_parent"

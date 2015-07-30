@@ -50,4 +50,5 @@
     <string name="btnDivider">Button Divider</string>
     <string name="message_icon">Message icon</string>
     <string name="refresh">We\\\'re refreshing</string>
+    <string name="userAvatar">user Avatar</string>
 </resources>

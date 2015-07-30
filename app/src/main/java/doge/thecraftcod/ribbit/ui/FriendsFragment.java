@@ -3,11 +3,12 @@ package doge.thecraftcod.ribbit.ui;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -17,21 +18,29 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-import doge.thecraftcod.ribbit.utils.ParseConstants;
 import doge.thecraftcod.ribbit.R;
+import doge.thecraftcod.ribbit.adapters.UserAdapter;
+import doge.thecraftcod.ribbit.utils.ParseConstants;
 
 /**
  * Created by gerardo on 19/07/15.
  */
-public class FriendsFragment extends ListFragment {
+public class FriendsFragment extends Fragment {
     private List<ParseUser> mFriends;
     private ParseRelation<ParseUser> mFriendsRelation;
     private ParseUser mCurrentUser;
+    private GridView mGrid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+        View rootView = inflater.inflate(R.layout.user_grid, container, false);
+
+        mGrid = (GridView) rootView.findViewById(R.id.friends_grid);
+
+        TextView emptyTextView = (TextView) rootView.findViewById(android.R.id.empty);
+        mGrid.setEmptyView(emptyTextView);
+
         return rootView;
     }
 
@@ -60,12 +69,16 @@ public class FriendsFragment extends ListFragment {
                         usernames[i] = user.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(),
-                            android.R.layout.simple_list_item_1, usernames);
-                    setListAdapter(adapter);
+                    if (mGrid.getAdapter() == null) {
+                        UserAdapter adapter = new UserAdapter(getActivity(), mFriends);
+                        mGrid.setAdapter(adapter);
+                    }
+                    else {
+                        ((UserAdapter)mGrid.getAdapter()).refill(mFriends);
+                    }
                 }// end if
                 else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(e.getMessage())
                             .setTitle(R.string.sign_up_error_title)
                             .setPositiveButton(android.R.string.ok, null);
