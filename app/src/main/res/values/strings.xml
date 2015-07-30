@@ -51,4 +51,6 @@
     <string name="message_icon">Message icon</string>
     <string name="refresh">We\\\'re refreshing</string>
     <string name="userAvatar">user Avatar</string>
+    <string name="checkedUserAvatar">Cheked image</string>
+    <string name="push_message">You have a new message from %s!</string>
 </resources>

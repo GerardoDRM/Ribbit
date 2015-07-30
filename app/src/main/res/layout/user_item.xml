@@ -6,16 +6,17 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/userImage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:src="@mipmap/avatar_empty"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/userAvatar"/>
+        android:contentDescription="@string/userAvatar"
+        style="@style/GridImage" />
 
+    <ImageView
+        android:id="@+id/checkedUserImage"
+        android:src="@mipmap/avatar_selected"
+        android:contentDescription="@string/checkedUserAvatar"
+        style="@style/GridImage"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"

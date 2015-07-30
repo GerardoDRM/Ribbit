@@ -16,6 +16,7 @@ import com.parse.SignUpCallback;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import doge.thecraftcod.ribbit.R;
+import doge.thecraftcod.ribbit.RibbitApp;
 
 
 public class SignUpActivity extends Activity {
@@ -71,6 +72,9 @@ public class SignUpActivity extends Activity {
                             setProgressBarIndeterminateVisibility(false);
                             if (e == null) {
                                 // Hooray! Let them use the app now.
+                                RibbitApp.updateParseInstallation(
+                                        ParseUser.getCurrentUser()
+                                );
                                 Intent i = new Intent(SignUpActivity.this, MainActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

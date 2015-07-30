@@ -9,15 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -26,11 +28,11 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
+import doge.thecraftcod.ribbit.R;
+import doge.thecraftcod.ribbit.adapters.UserAdapter;
 import doge.thecraftcod.ribbit.utils.FileHelper;
 import doge.thecraftcod.ribbit.utils.ParseConstants;
-import doge.thecraftcod.ribbit.R;
 
 
 public class ChooseRecipients extends ActionBarActivity {
@@ -41,23 +43,51 @@ public class ChooseRecipients extends ActionBarActivity {
     private MenuItem mSendMenuItem;
     private Uri mMediaUri;
     private String fileType;
+    private GridView mGridView;
 
-    @Bind(android.R.id.list) ListView mListView;
-    @Bind(android.R.id.empty) TextView mEmptyText;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_recipients);
+        setContentView(R.layout.user_grid);
         ButterKnife.bind(this);
 
-        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView = (GridView) findViewById(R.id.friends_grid);
+        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
+        mGridView.setEmptyView(emptyTextView);
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ImageView checkedImage = (ImageView) view.findViewById(R.id.checkedUserImage);
+
+                if (mGridView.getCheckedItemCount() > 0) {
+                    mSendMenuItem.setVisible(true);
+                } else {
+                    mSendMenuItem.setVisible(false);
+                }
+                if (mGridView.isItemChecked(position)) {
+                    // add a friend
+                    mFriendsRelation.add(mFriends.get(position));
+                    checkedImage.setVisibility(View.VISIBLE);
+
+                } else {
+                    // remove a friend
+                    mFriendsRelation.remove(mFriends.get(position));
+                    checkedImage.setVisibility(View.INVISIBLE);
+
+
+                }
+            }
+        });
 
         mMediaUri = getIntent().getData();
         fileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
-        Log.d("FILE",fileType);
+        Log.d("FILE", fileType);
+
 
     }
 
@@ -86,21 +116,13 @@ public class ChooseRecipients extends ActionBarActivity {
                         usernames[i] = user.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mListView.getContext(),
-                            android.R.layout.simple_list_item_checked, usernames);
-                    mListView.setAdapter(adapter);
-                    mListView.setEmptyView(mEmptyText);
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (mListView.getCheckedItemCount() > 0) {
-                                mSendMenuItem.setVisible(true);
-                            }
-                            else {
-                                mSendMenuItem.setVisible(false);
-                            }
-                        }
-                    });
+                    if (mGridView.getAdapter() == null) {
+                        UserAdapter adapter = new UserAdapter(ChooseRecipients.this, mFriends);
+                        mGridView.setAdapter(adapter);
+                    } else {
+                        ((UserAdapter) mGridView.getAdapter()).refill(mFriends);
+                    }
+
                 }// end if
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChooseRecipients.this);
@@ -160,6 +182,7 @@ public class ChooseRecipients extends ActionBarActivity {
                 if (e == null) {
                     // Success
                     Toast.makeText(ChooseRecipients.this, R.string.message_ok, Toast.LENGTH_LONG).show();
+                    sendPushNotification();
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChooseRecipients.this);
@@ -172,6 +195,18 @@ public class ChooseRecipients extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    private void sendPushNotification() {
+        ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+        query.whereContainedIn(ParseConstants.KEY_USER_ID, getRecipientsIds());
+
+        // send push notification
+        ParsePush push = new ParsePush();
+        push.setQuery(query);
+        push.setMessage(getString(R.string.push_message,
+                ParseUser.getCurrentUser().getUsername()));
+        push.sendInBackground();
     }
 
     private ParseObject createMessage() {
@@ -200,8 +235,8 @@ public class ChooseRecipients extends ActionBarActivity {
 
     public ArrayList<String> getRecipientsIds() {
         ArrayList<String> recipientIds = new ArrayList<String>();
-        for(int i=0; i < mListView.getCount(); i++) {
-            if (mListView.isItemChecked(i)) {
+        for(int i=0; i < mGridView.getCount(); i++) {
+            if (mGridView.isItemChecked(i)) {
                 recipientIds.add(mFriends.get(i).getObjectId());
 
             }
