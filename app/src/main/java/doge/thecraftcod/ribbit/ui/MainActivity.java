@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,6 +26,10 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import doge.thecraftcod.ribbit.utils.ParseConstants;
+import doge.thecraftcod.ribbit.R;
+import doge.thecraftcod.ribbit.adapters.SectionsPagerAdapter;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {

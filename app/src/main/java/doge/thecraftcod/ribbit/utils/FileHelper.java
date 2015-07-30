@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

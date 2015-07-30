@@ -48,4 +48,6 @@
     <string name="subtitle">Destructive messages</string>
     <string name="cancel">Cancel</string>
     <string name="btnDivider">Button Divider</string>
+    <string name="message_icon">Message icon</string>
+    <string name="refresh">We\\\'re refreshing</string>
 </resources>

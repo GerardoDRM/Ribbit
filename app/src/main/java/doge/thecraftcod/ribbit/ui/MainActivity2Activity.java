@@ -1,10 +1,12 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import doge.thecraftcod.ribbit.R;
 
 
 public class MainActivity2Activity extends Activity {

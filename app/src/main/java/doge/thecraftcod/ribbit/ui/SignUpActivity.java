@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,7 @@ import com.parse.SignUpCallback;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import doge.thecraftcod.ribbit.R;
 
 
 public class SignUpActivity extends Activity {

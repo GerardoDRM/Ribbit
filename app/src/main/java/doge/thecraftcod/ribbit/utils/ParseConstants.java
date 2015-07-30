@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.utils;
 
 /**
  * Created by gerardo on 20/07/15.

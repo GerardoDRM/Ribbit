@@ -1,6 +1,4 @@
-package doge.thecraftcod.ribbit;
-
-import java.io.ByteArrayOutputStream;
+package doge.thecraftcod.ribbit.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

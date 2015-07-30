@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.ui;
 
 
 import android.app.AlertDialog;
@@ -16,6 +16,9 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.List;
+
+import doge.thecraftcod.ribbit.utils.ParseConstants;
+import doge.thecraftcod.ribbit.R;
 
 /**
  * Created by gerardo on 19/07/15.

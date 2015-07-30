@@ -1,4 +1,4 @@
-package doge.thecraftcod.ribbit;
+package doge.thecraftcod.ribbit.ui;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import doge.thecraftcod.ribbit.utils.ParseConstants;
+import doge.thecraftcod.ribbit.R;
 
 
 public class EditFriendsActivity extends ActionBarActivity {
